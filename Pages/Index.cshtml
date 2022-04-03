@@ -1,0 +1,39 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@if (Model.Images?.Count > 0)
+{
+    <div class="alert alert-info">
+        @Model.Images.Count()
+        個の画像があります。
+    </div>
+    <ul>
+        @foreach (var url in @Model.Images)
+        {
+            <img src="@url" alt="uploaded image">
+            <hr>
+        }
+    </ul>
+}
+else
+{
+    <div class="alert alert-info">
+        まだ画像がありません。最初の画像をアップロードしてください!
+    </div>
+}
+
+<form enctype="multipart/form-data" method="post">
+    <dl>
+        <dt>
+            <label asp-for="ImageFile"></label>
+        </dt>
+        <dd>
+            <input asp-for="ImageFile" type="file" class="file">
+            <span asp-validation-for="ImageFile"></span>
+        </dd>
+    </dl>
+    <input asp-page-handler="Upload" class="btn btn-primary" type="submit" value="Upload" />
+</form>
